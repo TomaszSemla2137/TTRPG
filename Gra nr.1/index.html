@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Moja Gra RPG</title>
+    <style>
+        /* Proste wyśrodkowanie canvas w przeglądarce */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #000; /* kolor tła */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        canvas {
+            border: 1px solid #fff; /* opcjonalna ramka wokół gry */
+        }
+    </style>
+</head>
+<body>
+    <!-- Najpierw ładujemy bibliotekę Phaser (global), potem nasz moduł ES -->
+    <script src="phaser.js"></script>
+    <script type="module" src="src/main.js"></script> <!-- Ładujemy nasz główny plik JS -->
+</body>
+</html>
