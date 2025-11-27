@@ -26,22 +26,22 @@ export default class GameScene extends Phaser.Scene {
 		this.load.image('smok2', 'assets/smok2.png');
 		
 		// Grafiki kostek do gry (d4 - d100)
-		this.load.image('d4', 'assets/D4.png');
-		this.load.image('d6', 'assets/d6.png');
-		this.load.image('d8', 'assets/d8.png');
-		this.load.image('d10', 'assets/d10.png');
-		this.load.image('d12', 'assets/d12.png');
-		this.load.image('d20', 'assets/d20.png');
-		this.load.image('d100', 'assets/d100.png');
-		this.load.image('atk', 'assets/atk.png');
-		this.load.image('kp', 'assets/kp.png');
-		this.load.image('pw', 'assets/pw.png');
-		this.load.image('str', 'assets/str.png');
-		this.load.image('dex', 'assets/dex.png');
-		this.load.image('con', 'assets/knd.png');
-		this.load.image('int', 'assets/mdr.png');
-		this.load.image('knw', 'assets/wsd.png');
-		this.load.image('char', 'assets/char.png');
+		this.load.image('d4', 'assets/dices/D4.png');
+		this.load.image('d6', 'assets/dices/d6.png');
+		this.load.image('d8', 'assets/dices/d8.png');
+		this.load.image('d10', 'assets/dices/d10.png');
+		this.load.image('d12', 'assets/dices/d12.png');
+		this.load.image('d20', 'assets/dices/d20.png');
+		this.load.image('d100', 'assets/dices/d100.png');
+		this.load.image('atk', 'assets/character_sheet/atk.png');
+		this.load.image('kp', 'assets/character_sheet/kp.png');
+		this.load.image('pw', 'assets/character_sheet/pw.png');
+		this.load.image('str', 'assets/character_sheet/str.png');
+		this.load.image('dex', 'assets/character_sheet/dex.png');
+		this.load.image('con', 'assets/character_sheet/knd.png');
+		this.load.image('int', 'assets/character_sheet/mdr.png');
+		this.load.image('knw', 'assets/character_sheet/wsd.png');
+		this.load.image('char', 'assets/character_sheet/char.png');
 	}
 
 	// --------------------------------------------------------------------------------
