@@ -33,6 +33,15 @@ export default class GameScene extends Phaser.Scene {
 		this.load.image('d12', 'assets/d12.png');
 		this.load.image('d20', 'assets/d20.png');
 		this.load.image('d100', 'assets/d100.png');
+		this.load.image('atk', 'assets/atk.png');
+		this.load.image('kp', 'assets/kp.png');
+		this.load.image('pw', 'assets/pw.png');
+		this.load.image('str', 'assets/str.png');
+		this.load.image('dex', 'assets/dex.png');
+		this.load.image('con', 'assets/knd.png');
+		this.load.image('int', 'assets/mdr.png');
+		this.load.image('knw', 'assets/wsd.png');
+		this.load.image('char', 'assets/char.png');
 	}
 
 	// --------------------------------------------------------------------------------
@@ -81,6 +90,16 @@ export default class GameScene extends Phaser.Scene {
 
 		// Zakładki
 		const tabs = ['Karta postaci', 'Statystyki', 'Ekwipunek', 'Mapa', 'Siatka bitewna', 'Rzuty kostką', 'Biblioteka'];
+		// ================================================================================
+		// TAB INDEX MAP (dla łatwiejszej orientacji)
+		// 0: Karta postaci
+		// 1: Statystyki
+		// 2: Ekwipunek
+		// 3: Mapa
+		// 4: Siatka bitewna
+		// 5: Rzuty kostką
+		// 6: Biblioteka
+		// ================================================================================
 		const tabGap = 8;
 		// Najpierw oblicz pozycje ikon (używane też do ustalenia granic dla zakładek)
 		const iconSize = 56;
@@ -179,6 +198,9 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	renderCharacterSheet(){
+		// ================================================================================
+		// TAB 0 — KARTA POSTACI (renderCharacterSheet)
+		// ================================================================================
 		const cx = this.centerBg.x;
 		const cy = this.centerBg.y;
 		const cw = this.centerWidth;
@@ -189,17 +211,29 @@ export default class GameScene extends Phaser.Scene {
 		this._centerChildren.push(this.add.text(cx, infoY, this.charData.name, { font: 'bold 24px Arial', fill: '#ffdd55' }).setOrigin(0.5).setDepth(2));
 		this._centerChildren.push(this.add.text(cx - cw/2 + 20, infoY + 28, `Class: ${this.charData.classLevel} | Race: ${this.charData.race} | Player: ${this.charData.player}`, { font: '16px Arial', fill: '#fff' }).setOrigin(0,0).setDepth(2));
 
-		// Attributes in two columns (left side)
+		// Attributes in two columns (left side) with icons and readable labels
 		const leftX = cx - cw/2 + 40;
 		let attrY = infoY + 68;
 		const keys = ['STR','DEX','CON','INT','WIS','CHA'];
+		// human-readable labels (change them here to rename attributes)
+		const attrLabels = { STR: 'Siła', DEX: 'Zręczność', CON: 'Kondycja', INT: 'Inteligencja', WIS: 'Mądrość', CHA: 'Charyzma' };
+		// icon keys loaded in preload (place icon files in `assets/` or `assets/icons/` and load them in preload)
+		const attrIcons = { STR: 'str', DEX: 'dex', CON: 'con', INT: 'int', WIS: 'knw', CHA: 'char' };
 		keys.forEach((k,i)=>{
 			const y = attrY + Math.floor(i/2)*28;
 			const x = leftX + (i%2)*140;
 			const val = this.charData.attributes[k] || 10;
 			const mod = Math.floor((val-10)/2);
 			const modStr = mod>=0 ? '+'+mod : String(mod);
-			this._centerChildren.push(this.add.text(x, y, `${k}: ${val} (${modStr})`, { font: '16px Arial', fill: '#ddd' }).setOrigin(0).setDepth(2));
+			// icon (if loaded)
+			const iconKey = attrIcons[k];
+			if (iconKey && this.textures.exists(iconKey)){
+				const ic = this.add.image(x - 18, y, iconKey).setDisplaySize(18,18).setOrigin(0,0.5).setDepth(2);
+				this._centerChildren.push(ic);
+			}
+			const label = attrLabels[k] || k;
+			const textX = x + 12; // leave space for icon
+			this._centerChildren.push(this.add.text(textX, y, `${label}: ${val} (${modStr})`, { font: '16px Arial', fill: '#ddd' }).setOrigin(0).setDepth(2));
 		});
 
 		// Stats: AC, HP, Initiative, Speed (below attributes)
@@ -266,6 +300,9 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	renderStatsTab(){
+		// ================================================================================
+		// TAB 1 — STATYSTYKI (renderStatsTab)
+		// ================================================================================
 		const cx = this.centerBg.x;
 		const cy = this.centerBg.y;
 		const cw = this.centerWidth;
@@ -276,9 +313,18 @@ export default class GameScene extends Phaser.Scene {
 		const keys = ['STR','DEX','CON','INT','WIS','CHA'];
 		const leftX = cx - cw/2 + 120;
 		let attrY = cy - this.centerHeight/2 + 80;
+		// readable labels and icons (change labels in attrLabels)
+		const attrLabels = { STR: 'Siła', DEX: 'Zręczność', CON: 'Kondycja', INT: 'Inteligencja', WIS: 'Mądrość', CHA: 'Charyzma' };
+		const attrIcons = { STR: 'str', DEX: 'dex', CON: 'con', INT: 'int', WIS: 'knw', CHA: 'char' };
 		keys.forEach((k,i)=>{
 			const y = attrY + i*44;
-			this._centerChildren.push(this.add.text(leftX - 60, y, k, { font: '16px Arial', fill: '#fff' }).setOrigin(0.5).setDepth(2));
+			// optional icon
+			const iconKey = attrIcons[k];
+			if (iconKey && this.textures.exists(iconKey)){
+				const ic = this.add.image(leftX - 88, y, iconKey).setDisplaySize(18,18).setOrigin(0.5).setDepth(2);
+				this._centerChildren.push(ic);
+			}
+			this._centerChildren.push(this.add.text(leftX - 60, y, attrLabels[k] || k, { font: '16px Arial', fill: '#fff' }).setOrigin(0.5).setDepth(2));
 			const minus = this.add.text(leftX - 20, y, '−', { font: '20px Arial', fill: '#ff6666' }).setOrigin(0.5).setDepth(2).setInteractive({ useHandCursor: true });
 			minus.on('pointerdown', ()=>{ this.charData.attributes[k] = Math.max(1, (this.charData.attributes[k]||10)-1); this.saveCharData(); this.showTabContent(1); });
 			const valText = this.add.text(leftX + 12, y, String(this.charData.attributes[k]||10), { font: '18px Arial', fill: '#ffdd55' }).setOrigin(0.5).setDepth(2);
@@ -339,6 +385,9 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	renderEquipmentTab(){
+		// ================================================================================
+		// TAB 2 — EKWIPUNEK (renderEquipmentTab)
+		// ================================================================================
 		const cx = this.centerBg.x;
 		const cy = this.centerBg.y;
 		const cw = this.centerWidth;
@@ -384,6 +433,9 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	renderDiceTab(){
+		// ================================================================================
+		// TAB 5 — RZUTY KOSTKĄ (renderDiceTab)
+		// ================================================================================
 		const cx = this.centerBg.x;
 		const cy = this.centerBg.y;
 		const cw = this.centerWidth;
@@ -462,6 +514,9 @@ export default class GameScene extends Phaser.Scene {
 	}
 
 	renderLibraryTab(){
+		// ================================================================================
+		// TAB 6 — BIBLIOTEKA (renderLibraryTab)
+		// ================================================================================
 		const cx = this.centerBg.x;
 		const cy = this.centerBg.y;
 		this._centerChildren.push(this.add.text(cx, cy - this.centerHeight/2 + 30, 'Biblioteka', { font: '18px Arial', fill: '#fff' }).setOrigin(0.5).setDepth(2));

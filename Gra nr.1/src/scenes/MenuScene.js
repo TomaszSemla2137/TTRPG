@@ -1,13 +1,25 @@
+// ================================================================================
+// MENUSCENE - Ekran głównego menu
+// ================================================================================
 export default class MenuScene extends Phaser.Scene {
-    constructor(){
-        super({key: 'MenuScene'});
-    }
+	// -------------------------------------------------------------------------------
+	// KONSTRUKTOR
+	// -------------------------------------------------------------------------------
+	constructor(){
+		super({key: 'MenuScene'});
+	}
     preload() {
+        // ---------------------------------------------------------------------------
+        // PRELOAD - ładowanie zasobów menu
+        // ---------------------------------------------------------------------------
         this.load.image('background', 'assets/bg_menu.png');
         this.load.image('buttonStart', 'assets/Button_Start.png');
         this.load.image('buttonOption', 'assets/Button_Option.png');
     }
     create(){
+        // ---------------------------------------------------------------------------
+        // CREATE - ustawienie tła i przycisków
+        // ---------------------------------------------------------------------------
         this.add.image(400, 300, 'background');
 
         // Pozycje przycisków można łatwo regulować przez te zmienne
@@ -54,7 +66,9 @@ export default class MenuScene extends Phaser.Scene {
             }
         });
 
-        // Debug: log when any game object is clicked (helps verify input works)
+        // ---------------------------------------------------------------------------
+        // DEBUG - zdarzenia wejścia
+        // ---------------------------------------------------------------------------
         this.input.on('gameobjectdown', (pointer, gameObject) => {
             console.log('gameobjectdown on', gameObject.texture ? gameObject.texture.key : gameObject);
         });
