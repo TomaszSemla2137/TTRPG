@@ -1,0 +1,69 @@
+.button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.button img {
+  display: block;
+  width: 200px; /* dopasuj */
+  height: auto;
+}
+
+/* Centrowanie przycisku na środku strony (Flexbox) */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+body {
+  display: flex;
+  flex-direction: column; /* header nad main */
+  align-items: center;    /* centruje zawartość poziomo */
+  justify-content: flex-start; /* trzymaj zawartość od góry */
+  min-height: 100vh;
+}
+
+/* Jeśli chcesz centrować tylko w obrębie kontenera zamiast całego body,
+   owiń przycisk w <div class="center"> i użyj reguły poniżej zamiast body */
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+/* Nagłówek: obrazki po bokach tytułu */
+header {
+    background-color: darkslateblue;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* tytuł wyśrodkowany, obrazki po bokach */
+  gap: 20px;
+  /* Usuń odstęp pod headerem: padding dolny = 0 */
+  padding: 20px 10px 0 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+header .logo {
+  width: 120px;
+  height: auto;
+  display: block;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 36px;
+  text-align: center;
+}
+
+/* Przyciski w main będą w środku dzięki ustawieniu body (align-items: center).
+   Dodatkowo dajemy odstęp od nagłówka */
+main {
+    background-color: grey;
+  /* Usuń margines nad main, żeby nie było białej przerwy */
+  margin-top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center; /* przycisk na środku poziomo */
+}

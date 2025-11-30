@@ -1,0 +1,30 @@
+/* Header styles for Logowanie.html */
+header {
+  background-color: darkslateblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px 10px 0 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+header .logo {
+  width: 120px;
+  height: auto;
+  display: block;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 36px;
+  text-align: center;
+}
+
+main {
+  margin-top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="Menu.js" defer></script>
+    <link rel="stylesheet" type="text/css" href="gra.css">
+        <!-- Bootstrap CSS for tab styling -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Gra</title>
+</header>
+    <main>
+        <!-- Pasek zakładek -->
+        <nav class="toolbar" role="navigation" aria-label="Panel gry">
+            <nav class="toolbar nav nav-tabs" role="navigation" aria-label="Panel gry">
+                <button data-panel="charSheet" class="nav-link tab active">Karta postaci</button>
+                <button data-panel="stats" class="nav-link tab">Statystyki</button>
+                <button data-panel="inventory" class="nav-link tab">Ekwipunek</button>
+                <button data-panel="dice" class="nav-link tab">Rzuty kośćmi</button>
+                <button data-panel="worldMap" class="nav-link tab">Mapa świata</button>
+                <button data-panel="battleMap" class="nav-link tab">Mapa bitwy</button>
+                <button data-panel="library" class="nav-link tab">Biblioteka</button>
+            </nav>
+        </nav>
+
+        <!-- Sekcje/panele (pokazywane/ukrywane przez JS) -->
+        <section id="panels">
+            <section id="charSheet" class="panel active">
+                <h2>Karta postaci</h2>
+                <div class="panel-body">
+                    <form id="charForm">
+                        <div class="card-top">
+                            <h3 id="charName">-</h3>
+                            <div class="char-meta">
+                                <span id="displayRace">Rasa: -</span>
+                                <span id="displayClass">Klasa: -</span>
+                                <span id="displayLevel">Poziom: -</span>
+                                <span id="displayExperience">XP: -</span>
+                            </div>
+                        </div>
+                        <div class="char-columns">
+                            <div class="left-col">
+                                <h4>Statystyki</h4>
+                                <div class="stat-list">
+                                    <div class="stat-row"><span class="stat-label">Siła</span><span id="disp_str" class="stat-val">-</span><span id="mod_str" class="stat-mod">(+0)</span></div>
+                                    <div class="stat-row"><span class="stat-label">Zręczność</span><span id="disp_dex" class="stat-val">-</span><span id="mod_dex" class="stat-mod">(+0)</span></div>
+                                    <div class="stat-row"><span class="stat-label">Kondycja</span><span id="disp_con" class="stat-val">-</span><span id="mod_con" class="stat-mod">(+0)</span></div>
+                                    <div class="stat-row"><span class="stat-label">Inteligencja</span><span id="disp_int" class="stat-val">-</span><span id="mod_int" class="stat-mod">(+0)</span></div>
+                                    <div class="stat-row"><span class="stat-label">Mądrość</span><span id="disp_wis" class="stat-val">-</span><span id="mod_wis" class="stat-mod">(+0)</span></div>
+                                    <div class="stat-row"><span class="stat-label">Charyzma</span><span id="disp_cha" class="stat-val">-</span><span id="mod_cha" class="stat-mod">(+0)</span></div>
+                                </div>
+
+                                <div class="skills">
+                                    <h4>Umiejętności</h4>
+                                    <div id="skillsDisplay">Brak</div>
+                                </div>
+                            </div>
+
+                            <div class="right-col">
+                                <h4>Podstawowe</h4>
+                                <div class="field"><label>Zdrowie (aktualne / maks)<br>
+                                    <span id="health_current">-</span> / <span id="health_max">-</span></label></div>
+                                <div class="field"><label>Kp<br><span id="kp_display">-</span></label></div>
+                                <div class="field"><label>Inicjatywa<br><span id="initiative_display">-</span></label></div>
+                                <div class="field"><label>Szybkość<br><span id="speed_display">-</span></label></div>
+
+                                <div class="attacks">
+                                    <h4>Ataki (obrażenia)</h4>
+                                    <div class="attack-row">
+                                        <span id="weapon1_name_disp">-</span>
+                                        <span id="weapon1_desc_disp">-</span>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" data-roll="1">Rzuć</button>
+                                    </div>
+                                    <div class="attack-row">
+                                        <span id="weapon2_name_disp">-</span>
+                                        <span id="weapon2_desc_disp">-</span>
+                                        <button type="button" class="btn btn-sm btn-outline-primary" data-roll="2">Rzuć</button>
+                                    </div>
+                                </div>
+
+                                
+
+                                <div class="form-actions">
+                                    <button type="button" id="saveCharBtn" class="btn btn-primary">Zapisz kartę</button>
+                                    <button type="button" id="loadCharBtn" class="btn btn-secondary">Wczytaj</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section id="stats" class="panel">
+                <h2>Statystyki</h2>
+                <div class="panel-body">
+                    <div class="stats-grid">
+                        <div class="card-section">
+                            <h4>Atrybuty</h4>
+                            <div class="stat-edit-grid">
+                                <div class="field"><label>Siła<br><input id="str" type="number"></label></div>
+                                <div class="field"><label>Zręczność<br><input id="dex" type="number"></label></div>
+                                <div class="field"><label>Kondycja<br><input id="con" type="number"></label></div>
+                                <div class="field"><label>Inteligencja<br><input id="int" type="number"></label></div>
+                                <div class="field"><label>Mądrość<br><input id="wis" type="number"></label></div>
+                                <div class="field"><label>Charyzma<br><input id="cha" type="number"></label></div>
+                            </div>
+                        </div>
+
+                        <div class="card-section">
+                            <h4>Dane</h4>
+                            <div class="meta-edit">
+                                <div class="field"><label>Imię postaci<br><input id="edit_char_name" type="text"></label></div>
+                                <div class="field"><label>Rasa<br><input id="edit_char_race" type="text"></label></div>
+                                <div class="field"><label>Klasa<br><input id="edit_char_class" type="text"></label></div>
+                                <div class="field"><label>Poziom<br><input id="edit_char_level" type="number"></label></div>
+                                <div class="field"><label>Doświadczenie<br><input id="experience" type="number"></label></div>
+                                <div class="field"><label>Zdrowie aktualne<br><input id="edit_health_current" type="number"></label></div>
+                                <div class="field"><label>Zdrowie maks<br><input id="edit_health_max" type="number"></label></div>
+                                <div class="field"><label>Kp<br><input id="kp" type="number"></label></div>
+                                <div class="field"><label>Inicjatywa<br><input id="initiative" type="number"></label></div>
+                                <div class="field"><label>Szybkość<br><input id="speed" type="number"></label></div>
+                            </div>
+                        </div>
+
+                        <div class="card-section">
+                            <h4>Ataki</h4>
+                            <div class="combat-edit">
+                                <div class="field"><label>Atak 1 - Nazwa<br><input id="weapon1_name" type="text"></label></div>
+                                <div class="field small"><label>Kość<br>
+                                    <select id="weapon1_die">
+                                        <option value="4">d4</option>
+                                        <option value="6">d6</option>
+                                        <option value="8">d8</option>
+                                        <option value="10">d10</option>
+                                        <option value="12">d12</option>
+                                        <option value="20">d20</option>
+                                    </select>
+                                </label></div>
+                                <div class="field small"><label>Ilość<br><input id="weapon1_count" type="number" min="1" value="1"></label></div>
+                                <div class="field small"><label>Modyfikator<br><select id="weapon1_mod" class="mod-select"></select></label></div>
+
+                                <div class="field"><label>Atak 2 - Nazwa<br><input id="weapon2_name" type="text"></label></div>
+                                <div class="field small"><label>Kość<br>
+                                    <select id="weapon2_die">
+                                        <option value="4">d4</option>
+                                        <option value="6">d6</option>
+                                        <option value="8">d8</option>
+                                        <option value="10">d10</option>
+                                        <option value="12">d12</option>
+                                        <option value="20">d20</option>
+                                    </select>
+                                </label></div>
+                                <div class="field small"><label>Ilość<br><input id="weapon2_count" type="number" min="1" value="1"></label></div>
+                                <div class="field small"><label>Modyfikator<br><select id="weapon2_mod" class="mod-select"></select></label></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-section skills-section">
+                        <h4>Umiejętności</h4>
+                        <div id="skillsContainer" class="skills-container"></div>
+                        <div style="margin-top:8px;"><button id="addSkillBtn" type="button" class="btn btn-sm btn-outline-success">Dodaj umiejętność</button></div>
+                    </div>
+                    
+                    </div>
+                </div>
+            </section>
+
+            <section id="inventory" class="panel">
+                <h2>Ekwipunek</h2>
+                <div class="panel-body">
+                    <div id="inventoryContainer" class="inventory-container"></div>
+                    <div style="margin-top:8px;"><button id="addInventoryBtn" type="button" class="btn btn-sm btn-outline-success">Dodaj przedmiot</button></div>
+                </div>
+            </section>
+
+            <section id="dice" class="panel">
+                <h2>Rzuty kośćmi</h2>
+                <div class="panel-body">
+                    <div class="dice-controls">
+                        <label>Typ kości:
+                            <select id="diceType">
+                                <option value="4">d4</option>
+                                <option value="6" selected>d6</option>
+                                <option value="8">d8</option>
+                                <option value="10">d10</option>
+                                <option value="12">d12</option>
+                                <option value="20">d20</option>
+                            </select>
+                        </label>
+                        <label>Ilość:
+                            <input id="diceCount" type="number" min="1" value="1">
+                        </label>
+                        <button id="rollBtn">Rzuć</button>
+                        <div style="margin-left:12px; display:flex; align-items:center; gap:8px;">
+                            <input id="diceExpr" type="text" placeholder="np. 2d6+1d8+3" style="width:240px" />
+                            <button id="rollExprBtn" class="btn btn-sm btn-outline-primary">Rzuć wyrażenie</button>
+                        </div>
+                        <div style="margin-left:12px; display:flex; align-items:center; gap:8px; margin-top:8px;">
+                            <label style="font-size:13px;">Modyfikator statystyki:</label>
+                            <select id="diceModSelect" class="form-select" style="width:auto; max-width:160px;">
+                                <option value="">Brak</option>
+                                <option value="str">Siła</option>
+                                <option value="dex">Zręczność</option>
+                                <option value="con">Kondycja</option>
+                                <option value="int">Inteligencja</option>
+                                <option value="wis">Mądrość</option>
+                                <option value="cha">Charyzma</option>
+                            </select>
+                            <label style="font-size:13px;">Płaski modyfikator:</label>
+                            <input id="diceFlatMod" type="number" value="0" style="width:80px" />
+                        </div>
+                    </div>
+                    <div id="diceResult" class="dice-result"></div>
+                </div>
+            </section>
+
+            <section id="worldMap" class="panel">
+                <h2>Mapa świata</h2>
+                <div class="panel-body">
+                    <div class="world-controls" style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                        <button id="addWorldTokenBtn" class="btn btn-sm btn-outline-primary">Dodaj token</button>
+                        <button id="clearWorldTokensBtn" class="btn btn-sm btn-outline-danger">Usuń tokeny</button>
+                    </div>
+                    <div id="worldMapArea" class="battle-map">
+                        <div id="worldTokenLayer" class="token-layer"></div>
+                        <div id="worldMapEmbed" class="map-embed"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="battleMap" class="panel">
+                <h2>Mapa bitwy</h2>
+                <div class="panel-body">
+                    <div class="battle-controls" style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+                        <label><input type="checkbox" id="gridToggle" checked> Siatka</label>
+                        <label>Rozmiar siatki: <input id="gridSize" type="number" value="48" style="width:80px"></label>
+                        <button id="addTokenBtn" class="btn btn-sm btn-outline-primary">Dodaj token</button>
+                        <button id="clearTokensBtn" class="btn btn-sm btn-outline-danger">Usuń tokeny</button>
+                    </div>
+                    <div id="battleMapArea" class="battle-map">
+                        <!-- background will be set here (image or embedded PDF) -->
+                        <div id="tokenLayer" class="token-layer"></div>
+                        <div id="mapEmbed" class="map-embed"></div>
+                    </div>
+                </div>
+            </section>
+            <section id="library" class="panel">
+                <h2>Biblioteka</h2>
+                <div class="panel-body">
+                    <p>Tu możesz przechowywać zasoby, bestiariusz, opisy przygód i inne materiały.</p>
+                                        <div style="margin-bottom:8px; display:flex; gap:8px; align-items:center;">
+                                                <input id="libUpload" type="file" accept=".pdf,.jpg,.jpeg,.png">
+                                                <select id="libFolderSelect" class="form-select" style="width:auto; max-width:240px;">
+                                                        <option value="">Bez folderu</option>
+                                                </select>
+                                                <button id="createLibFolderBtn" type="button" class="btn btn-sm btn-outline-secondary">Nowy folder</button>
+                                        </div>
+                    <div id="libraryList" class="library-list"></div>
+                </div>
+            </section>
+        </section>
+    </main>
+        <!-- Token modal (Bootstrap) -->
+        <div class="modal fade" id="tokenModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form id="tokenForm">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Token</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mb-3">
+                                <label class="form-label">Nazwa tokena</label>
+                                <input id="tokenName" class="form-control" type="text" />
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Obrazek (lub wklej obraz)</label>
+                                <input id="tokenImageFile" class="form-control" type="file" accept="image/*" />
+                            </div>
+                            <div class="mb-3">
+                                <div id="tokenImagePreview" style="width:64px;height:64px;border:1px solid #ddd;border-radius:6px;background-size:cover;background-position:center"></div>
+                                <small class="text-muted">Możesz wkleić obraz (Ctrl+V) podczas otwartego formularza.</small>
+                                <input type="hidden" id="tokenImageData" />
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+                            <button id="tokenDeleteBtn" type="button" class="btn btn-danger d-none">Usuń token</button>
+                            <button id="tokenSaveBtn" type="submit" class="btn btn-primary">Zapisz</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <script src="gra.js" defer></script>
+        <!-- Bootstrap JS bundle (optional, provides components that use JS) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" defer></script>
+</body>
+</html>
+    </header>
+</body>
+</html>
